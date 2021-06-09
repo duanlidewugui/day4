@@ -2,6 +2,8 @@ from random import random, Random
 #
 #
 #进入商城，随机挑选商品进行半价，或者有购买该商品后可以进行全场满减
+#有一个小bug，购买满减商品折扣没法立刻减少，只有在结算时才会减少消费金额，
+#2021/6/9/10/38
 class GameShop:
     # 商品的名称和优惠状态，cost是原价，变为dis表示正在打折
 
@@ -42,6 +44,7 @@ games = [
 print("请输入您的余额")
 money = int(input())
 max_max = 0
+max1 = 0
 
 steam = GameShop(games)
 loan = int(random() * 20)
@@ -109,8 +112,10 @@ while True:
             while i < len(shop_cat):
                 m = m + shop_cat[i][2]
                 i += 1
-                max_max = steam.games[max][2]*steam.games[max][4]
+            max_max = steam.games[max][2]*steam.games[max][4]
             print("目前总金额为",m,"已优惠",max_max)
+            max_max = 0
+
         else:
             i = 0
             m = 0
@@ -129,25 +134,35 @@ while True:
                 break
             else:
                 print("目前总金额为",m-300,"已优惠300元")
-                max_max = 300
+
                 break
 
         print("输入随意数字退出购物车界面")
         input()
         break
 
-    while key == 3:
+    if key == 3:
         print("您购买了")
         print("名称", "\t\t\t价格", "\t\t\t购买数量")
         for i, name, price, state, amout in shop_cat:
             print(name,"\t\t\t",state,"\t\t\t",amout)
-        if max_max > 0:
-            print("您优惠了",max_max,"元")
+
         i = 0
         m = 0
         while i < len(shop_cat):
             m = m + shop_cat[i][2]
             i += 1
+
+        if max < 10:
+            max_max = steam.games[max][2] * steam.games[max][4]
+        else:
+            if steam.games[max - 10][4] != 0 and m >=600 :
+                max_max = 300
+                m = m -300
+                money += 300
+        if max_max > 0:
+            print("您优惠了",max_max,"元")
+
         print("您消费了",m,"元")
         m = int(m/10)
         print("您获得了",m,"积分")
