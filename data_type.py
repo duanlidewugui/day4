@@ -3,7 +3,7 @@ from random import random, Random
 #
 #进入商城，随机挑选商品进行半价，或者有购买该商品后可以进行全场满减
 #
-#2021/6/9/10/50
+#2021/6/9/11/10
 class GameShop:
     # 商品的名称和优惠状态，cost是原价，变为dis表示正在打折
 
@@ -17,7 +17,7 @@ class GameShop:
         self.dis = dis
         self.games[dis][2] = self.games[dis][2] / 2
         self.games[dis][3] = "dis"
-
+    #将商品的状态变为满减
     def max_minus(self,dis):
         self.games[dis][3] = "可满减"
 
@@ -27,7 +27,7 @@ class GameShop:
         print("商品序号\t","名称", "\t\t\t价格", "\t\t\t状态")
         for i,name, price, state,amout in self.games:
             print(i,"\t\t",name,"\t\t",price,"\t\t\t",state)
-
+#依次分别是商品序号，商品名称，商品价格，商品折扣状态，商品已被添加到购物车次数
 games = [
     [1,"gta5  ", 180, "cost",0],
     [2,"巫师3  ", 90, "cost",0],
@@ -40,9 +40,10 @@ games = [
     [9,"双人成行", 198, "cost",0],
     [10,"无主之地3", 198, "cost",0]
 ]
-
+#money就是全场的余额
 print("请输入您的余额")
 money = int(input())
+#max_max
 max_max = 0
 max1 = 0
 long_money = money
@@ -81,7 +82,7 @@ while True:
     while key == 1:
         print("请输入您想购买的商品的商品序号")
         id = int(input())
-        if id>10 or id<0:
+        if id>10 or id<=0:
             print("没有该商品，返回主页面")
             break
         elif money < games[id-1][2]:
@@ -154,7 +155,7 @@ while True:
         print("您购买了")
         print("名称", "\t\t\t价格", "\t\t\t购买数量")
         for i, name, price, state, amout in shop_cat:
-            print(name,"\t\t\t",state,"\t\t\t",amout)
+            print(name,"\t\t\t",price,"\t\t\t",amout)
 
         i = 0
         m = 0
