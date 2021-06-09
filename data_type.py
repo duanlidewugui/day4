@@ -2,8 +2,8 @@ from random import random, Random
 #
 #
 #进入商城，随机挑选商品进行半价，或者有购买该商品后可以进行全场满减
-#有一个小bug，购买满减商品折扣没法立刻减少，只有在结算时才会减少消费金额，
-#2021/6/9/10/38
+#
+#2021/6/9/10/50
 class GameShop:
     # 商品的名称和优惠状态，cost是原价，变为dis表示正在打折
 
@@ -45,6 +45,7 @@ print("请输入您的余额")
 money = int(input())
 max_max = 0
 max1 = 0
+long_money = money
 
 steam = GameShop(games)
 loan = int(random() * 20)
@@ -64,6 +65,14 @@ else:
 
 
 while True:
+    p = long_money-money
+    if max>10 and steam.games[max-10][4] != 0:
+        if max1 == 0 and p >= 600 :
+            money = money + 300
+            max1 += 1
+
+
+
     steam.getGames()
     print("请输入")
     print("您目前的余额为",money)
@@ -156,10 +165,10 @@ while True:
         if max < 10:
             max_max = steam.games[max][2] * steam.games[max][4]
         else:
-            if steam.games[max - 10][4] != 0 and m >=600 :
+            if max1 == 1 :
                 max_max = 300
                 m = m -300
-                money += 300
+
         if max_max > 0:
             print("您优惠了",max_max,"元")
 
